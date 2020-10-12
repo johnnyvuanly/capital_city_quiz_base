@@ -1,5 +1,7 @@
 // alert('Working!')
 
+let url = 'https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/slim-2/slim-2.json'
+
 let randomCountryElement = document.querySelector('#random-country')
 let userAnswerElement = document.querySelector("#user-answer")
 let submitButton = document.querySelector("#submit-answer")
@@ -38,7 +40,10 @@ submitButton.addEventListener('click', function() {
 
     fetch(url)
         .then(response => {
-
+            let JSONpromise = response.json()
+            return JSONpromise
+    }).then( (countryData) => {
+        console.log(countryData)
     })
 })
 
