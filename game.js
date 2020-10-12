@@ -1,7 +1,10 @@
+// alert('Working!')
+
 let randomCountryElement = document.querySelector('#random-country')
 let userAnswerElement = document.querySelector("#user-answer")
 let submitButton = document.querySelector("#submit-answer")
 let resultTextElement = document.querySelector('#result')
+let playAgainButton = document.querySelector('#play-again')
 
 // TODO finish the script to challenge the user about their knowledge of capital cities.
 // An array of country codes is provided in the countries.js file. 
@@ -10,10 +13,14 @@ let resultTextElement = document.querySelector('#result')
 
 console.log(countriesAndCodes)  // You don't need to log countriesAndCodes - just proving it is available 
 
-
 // TODO when the page loads, select an element at random from the countriesAndCodes array
+let pageLoadCountry = countriesAndCodes[Math.floor(Math.random() * countriesAndCodes.length)]; // This selects a random element from the array, from stakeoverflow
+// console.log(pageLoadCountry)
+let pageLoadCountryName = pageLoadCountry.name // Here we just grab the name of the object that's returned 
+// console.log(pageLoadCountryName)
 
 // TODO display the country's name in the randomCountryElement 
+randomCountryElement.innerHTML = pageLoadCountryName
 
 // TODO add a click event handler to the submitButton.  When the user clicks the button,
 //  * read the text from the userAnswerElement 
@@ -26,7 +33,14 @@ console.log(countriesAndCodes)  // You don't need to log countriesAndCodes - jus
 //      If you want to be more flexible, include and use a string similarity library such as https://github.com/hiddentao/fast-levenshtein 
 //  * Finally, display an appropriate message in the resultTextElement to tell the user if they are right or wrong. 
 //      For example "Correct! The capital of Germany is Berlin" or "Wrong - the capital of Germany is not G, it is Berlin"
+submitButton.addEventListener('click', function() {
+    let userAnwser = userAnswerElement.value
 
+    fetch(url)
+        .then(response => {
+
+    })
+})
 
 // TODO finally, connect the play again button. Clear the user's answer, select a new random country, 
 // display the country's name, handle the user's guess. If you didn't use functions in the code you've 
