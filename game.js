@@ -1,7 +1,5 @@
 // alert('Working!')
 
-let url = 'https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/slim-2/slim-2.json'
-
 let randomCountryElement = document.querySelector('#random-country')
 let userAnswerElement = document.querySelector("#user-answer")
 let submitButton = document.querySelector("#submit-answer")
@@ -16,13 +14,16 @@ let playAgainButton = document.querySelector('#play-again')
 console.log(countriesAndCodes)  // You don't need to log countriesAndCodes - just proving it is available 
 
 // TODO when the page loads, select an element at random from the countriesAndCodes array
-let pageLoadCountry = countriesAndCodes[Math.floor(Math.random() * countriesAndCodes.length)]; // This selects a random element from the array, from stakeoverflow
+let pageLoadCountry = countriesAndCodes[Math.floor(Math.random() * countriesAndCodes.length)]; // This selects a random element from the array, random code from stakeoverflow
 // console.log(pageLoadCountry)
 let pageLoadCountryName = pageLoadCountry.name // Here we just grab the name of the object that's returned 
 // console.log(pageLoadCountryName)
 
 // TODO display the country's name in the randomCountryElement 
 randomCountryElement.innerHTML = pageLoadCountryName
+
+countryAbbreviation = pageLoadCountry["alpha-2"] // alpha 2 is a key from the countries.js array that gives us the countries 2 letter abbreviation, the value
+// console.log(alpha2)
 
 // TODO add a click event handler to the submitButton.  When the user clicks the button,
 //  * read the text from the userAnswerElement 
@@ -36,17 +37,37 @@ randomCountryElement.innerHTML = pageLoadCountryName
 //  * Finally, display an appropriate message in the resultTextElement to tell the user if they are right or wrong. 
 //      For example "Correct! The capital of Germany is Berlin" or "Wrong - the capital of Germany is not G, it is Berlin"
 submitButton.addEventListener('click', function() {
-    let userAnwser = userAnswerElement.value
+    
+    url = `https://api.worldbank.org/v2/country/${countryAbbreviation}?format=json` // API link that takes the country abbreviation, that is taken from pageLoadCountry object
+
+    let userAnwser = userAnswerElement.value // Take in user input
 
     fetch(url)
         .then(response => {
             let JSONpromise = response.json()
             return JSONpromise
-    }).then( (countryData) => {
+    }).then( (countryData) => { // Country data is an array with all the objects that has the data we need
         console.log(countryData)
+        let capitalCity = countryData[1][0].capitalCity
+        if (capitalCity.toLowerCase() == userAnwser.toLowerCase()) { // Compares the capital city of the country to the users input and converts to lowercase so it's not case sensitive
+            resultTextElement.innerHTML = `Correct!`
+        } else {
+            resultTextElement.innerHTML = `Wrong - The capital of ${pageLoadCountryName} is ${capitalCity}`
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        alert(`Couldn't connect to the API`)
     })
 })
 
 // TODO finally, connect the play again button. Clear the user's answer, select a new random country, 
 // display the country's name, handle the user's guess. If you didn't use functions in the code you've 
 // already written, you should refactor your code to use functions to avoid writing very similar code twice. 
+
+playAgainButton.addEventListener('click', function() {
+    userAnswerElement.innerHTML = ''
+    let playAgainCountry = countriesAndCodes[Math.floor(Math.random() * countriesAndCodes.length)];
+    let playAgainCountryName = playAgainCountry.name
+    randomCountryElement.innerHTML = playAgainCountryName
+})
