@@ -65,9 +65,13 @@ submitButton.addEventListener('click', function() {
 // display the country's name, handle the user's guess. If you didn't use functions in the code you've 
 // already written, you should refactor your code to use functions to avoid writing very similar code twice. 
 
-playAgainButton.addEventListener('click', function() {
-    userAnswerElement.innerHTML = ''
-    let playAgainCountry = countriesAndCodes[Math.floor(Math.random() * countriesAndCodes.length)];
-    let playAgainCountryName = playAgainCountry.name
-    randomCountryElement.innerHTML = playAgainCountryName
-})
+// Below is a previous attempt but I found another way to clear user answer, select a new country and display the coutries name which was to simply refresh the page on clicking the button
+
+// playAgainButton.addEventListener('click', function() {
+//     userAnswerElement.innerHTML = ''
+//     let playAgainCountry = countriesAndCodes[Math.floor(Math.random() * countriesAndCodes.length)];
+//     let playAgainCountryName = playAgainCountry.name
+//     randomCountryElement.innerHTML = playAgainCountryName
+// })
+
+// Mohammad.sargazi@go.minneapolis.edu
